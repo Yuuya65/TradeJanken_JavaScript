@@ -41,12 +41,10 @@ let plFirstHand2 = [];
 let teFirstHand1 = [];
 let teFirstHand2 = [];
 
-/*
- 最終手札
- 二次元配列にする 
- use:true or false
- contents:"グー","チョキ","パー",
-*/
+// 最終手札
+// 二次元配列にする 
+// use:true or false
+// contents:"グー","チョキ","パー",
 let plLastHand ;
 let teLastHand ;
 
@@ -66,7 +64,7 @@ let exchangNum;
 let selectNum;
 
 
-/********************************************
+/**
  * ゲーム準備
  * 
  * HTML　スタート画面を消して、ゲーム画面（手札の交換画面）を表示する
@@ -89,7 +87,7 @@ function gamePreparation(){
     }
 }
 
-/*******************************************************************
+/**
  * 手札を作成する
  */
 function firstHandCreate(firstHand){
@@ -123,30 +121,22 @@ function gameReady(){
     document.getElementById("tradeHandDecide").style.display = "none";
     document.getElementById("tradeCompletDisplay").style.display = "inline";
     
-    /* console.log("交換した手札= " + exchangNum);
-    console.log(plFirstHand1);
-    console.log(plFirstHand2);
-    console.log(teFirstHand1);
-    console.log(teFirstHand2); */
-    
-    if(exchangNum === 1){
+    if(exchangNum == 1){   // 手札１を交換する場合
         plLastHand = lastHandCreate(plFirstHand2, teFirstHand1, false);
         teLastHand = lastHandCreate(plFirstHand1, teFirstHand2, true);
-    }else {
+    }else {                // 手札２を交換する場合
         plLastHand = lastHandCreate(plFirstHand1, teFirstHand1, false);
         teLastHand = lastHandCreate(plFirstHand2, teFirstHand2, true);
     }
-    
-    /* console.log(plLastHand);
-    console.log(teLastHand); */
-
+ 
+    // 画像を反映させる
     for(let i = 1; i < 7;i++){
         document.getElementById("afterTradeHand" + i).src = tehudaURL[plLastHand[i - 1].contents];
     }
 }
 
 
-/*************************************************************************
+/**
  * 最終手札の作成
  * @param firstHand1 最初に配られたプレイヤー側の手札
  * @param firstHand2 最初に配られた相手側の手札
@@ -162,7 +152,9 @@ function lastHandCreate(firstHand1, firstHand2 ,shuffle){
         {use: true, contents: 0},
         {use: true, contents: 0},
     ];
-    if(shuffle === true){
+    
+    // 相手のみカードをシャッフルする
+    if(shuffle){
         let arrayJoin = firstHand1.concat(firstHand2);
         for(let i = arrayJoin.length - 1; i > 0; i--) {
             let j = Math.floor(Math.random() * (i + 1));
@@ -173,7 +165,7 @@ function lastHandCreate(firstHand1, firstHand2 ,shuffle){
         for(let i = 0;i < 6;i++){
             lastHand[i].contents = arrayJoin[i];
         }
-    }else {
+    }else {  // プレイヤーはそのままカードを反映
         for(let i = 0;i < 3;i++){
             lastHand[i].contents = firstHand1[i];
             lastHand[i + 3].contents = firstHand2[i];
@@ -183,7 +175,7 @@ function lastHandCreate(firstHand1, firstHand2 ,shuffle){
 }
 
 
-/*************************************************************************
+/**
  * ゲームスタート
  */
 function gameStart(){
@@ -215,7 +207,7 @@ function selectHand(theNum){
     }
 }
 
-/*****************************************************************
+/**
  * 勝負
  */
 function readyFight() {
@@ -232,10 +224,8 @@ function readyFight() {
     document.getElementById("teMatchHand").src = tehudaURL[teHand];
     document.getElementById("plMatchHand").src = tehudaURL[plHand];
 
-    /**
-         * 勝利判定 
-         * １＝グー、２＝チョキ、３＝パー
-         */
+    // 勝利判定 
+    // １＝グー、２＝チョキ、３＝パー
     let resultComment;
     if(plHand === 1){
         if(teHand === 1){
@@ -284,7 +274,7 @@ function readyFight() {
     
 }
 
-/***************************************************************
+/**
  * 結果発表
  */
 function gameSet(){
@@ -318,7 +308,7 @@ function gameSet(){
     }
 }
 
-/**********************************************************************
+/**
  * スタート画面に戻る
  * 
  * 変数の初期化
